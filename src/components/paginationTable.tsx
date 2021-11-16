@@ -15,6 +15,8 @@ export const PaginationTable = () => {
     page,
     nextPage,
     previousPage,
+    canNextPage,
+    canPreviuosPage,
     prepareRow,
   } = useTable<object>(
     {
@@ -52,8 +54,8 @@ export const PaginationTable = () => {
         </tbody>
       </table>
       <div>
-        <button onClick={() => previousPage()}>Previuos</button>
-        <button onClick={() => nextPage()}>Next</button>
+        <button onClick={() => previousPage()} disabled={!nextPage ? !canPreviuosPage : canPreviuosPage}>Previuos</button>
+        <button onClick={() => nextPage()} disabled={!canNextPage}>Next</button>
       </div>
     </>
   );
