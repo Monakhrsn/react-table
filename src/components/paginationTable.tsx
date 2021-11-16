@@ -17,6 +17,8 @@ export const PaginationTable = () => {
     previousPage,
     canNextPage,
     canPreviuosPage,
+    pageOptions,
+    state,
     prepareRow,
   } = useTable<object>(
     {
@@ -26,9 +28,11 @@ export const PaginationTable = () => {
     usePagination
   );
 
+  const {pageIndex} = state
+
   return (
     <>
-      <table {...getTableProps()}>
+      <table {...getTableProps()}> 
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -54,6 +58,12 @@ export const PaginationTable = () => {
         </tbody>
       </table>
       <div>
+          <span>
+              Page{' '}
+              <strong>
+                {pageIndex + 1} of {pageOptions.length}
+              </strong>
+          </span>
         <button onClick={() => previousPage()} disabled={!nextPage ? !canPreviuosPage : canPreviuosPage}>Previuos</button>
         <button onClick={() => nextPage()} disabled={!canNextPage}>Next</button>
       </div>
