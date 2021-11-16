@@ -8,7 +8,7 @@ export const PaginationTable = () => {
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => MOCK_DATA, []);
 
-  const { 
+  const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
@@ -20,6 +20,7 @@ export const PaginationTable = () => {
     pageOptions,
     gotoPage,
     pageCount,
+    setPageSize,
     state,
     prepareRow,
   } = useTable<object>(
@@ -30,11 +31,11 @@ export const PaginationTable = () => {
     usePagination
   );
 
-  const {pageIndex} = state
+  const { pageIndex, pageSize } = state;
 
   return (
     <>
-      <table {...getTableProps()}> 
+      <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -60,27 +61,54 @@ export const PaginationTable = () => {
         </tbody>
       </table>
       <div>
-          <span>
-              Page{' '}
-              <strong>
-                {pageIndex + 1} of {pageOptions.length}
-              </strong>
-          </span>
-          <span>
-              | Go to page: {' '}
-              <input type="number" defaultValue={pageIndex + 1}
-                onChange={e => {
-                    const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0
-                    gotoPage(pageNumber)
-                }}
-                style={{width: '50px'}}
-              />
-          </span>
-          <button onClick={() => gotoPage(0)} disabled= {!nextPage ? !canPreviuosPage : canPreviuosPage}>{'<<'}</button>
-        <button onClick={() => previousPage()} disabled={!nextPage ? !canPreviuosPage : canPreviuosPage}>Previuos</button>
-        <button onClick={() => nextPage()} disabled={!canNextPage}>Next</button>
-        <button onClick={() => gotoPage(pageCount - 1)} disabled= {!canNextPage}>{'>>'}</button>
-
+        <span>
+          Page{' '}
+          <strong>
+            {pageIndex + 1} of {pageOptions.length}
+          </strong>
+        </span>
+        <span>
+          | Go to page:{' '}
+          <input
+            type='number'
+            defaultValue={pageIndex + 1}
+            onChange={(e) => {
+              const pageNumber = e.target.value
+                ? Number(e.target.value) - 1
+                : 0;
+              gotoPage(pageNumber);
+            }}
+            style={{ width: '50px' }}
+          />
+        </span>
+        <select
+          value={pageSize}
+          onChange={(e) => setPageSize(Number(e.target.value))}
+        >
+          {[10, 25, 50].map((pageSize) => (
+            <option key={pageSize} value={pageSize}>
+              Show {pageSize}
+            </option>
+          ))}
+        </select>
+        <button
+          onClick={() => gotoPage(0)}
+          disabled={!nextPage ? !canPreviuosPage : canPreviuosPage}
+        >
+          {'<<'}
+        </button>
+        <button
+          onClick={() => previousPage()}
+          disabled={!nextPage ? !canPreviuosPage : canPreviuosPage}
+        >
+          Previuos
+        </button>
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+          Next
+        </button>
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {'>>'}
+        </button>
       </div>
     </>
   );
