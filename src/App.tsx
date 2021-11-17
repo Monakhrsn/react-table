@@ -7,19 +7,13 @@ import FilteringTable from './components/filteringTable';
 import PaginationTable from './components/paginationTable';
 import RowSelection from './components/rowSelection';
 import SortingTable from './components/sortingTable';
+import StickyTable from './components/stickyTable';
 
 
 function App() {
   return (
    <div>
-     <ColumnHiding />
-     {/* <ColumnOrder /> */}
-     {/* <RowSelection /> */}
-     {/* <PaginationTable /> */}
-     {/* <FilteringTable /> */}
-     {/* <SortingTable /> */}
-     {/* <BasicTable /> */}
-
+     <StickyTable /> 
    </div>
   );
 }
